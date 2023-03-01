@@ -17,12 +17,18 @@ namespace BeanfunLogin
 {
     public partial class BeanfunClient : WebClient
     {
+        public static string radval = "TW";
 
         private string RegularLogin(string id, string pass, string skey)
         {
+            string loginHost;
+            if (radval == "TW")
+                loginHost = "tw.newlogin.beanfun.com";
+            else
+                loginHost = "login.hk.beanfun.com";
             try
             {
-                string response = this.DownloadString("https://tw.newlogin.beanfun.com/login/id-pass_form.aspx?skey=" + skey);
+                string response = this.DownloadString($"https://{loginHost}/login/id-pass_form{(radval == "HK" ? "_newBF.aspx?otp1" : ".aspx?skey")}={skey}");
                 SleepRandom();
 
                 Regex regex = new Regex("id=\"__VIEWSTATE\" value=\"(.*)\" />");
@@ -44,12 +50,13 @@ namespace BeanfunLogin
                 payload.Add("__EVENTARGUMENT", "");
                 payload.Add("__VIEWSTATE", viewstate);
                 payload.Add("__VIEWSTATEGENERATOR", viewstateGenerator);
+                if (radval == "HK") payload.Add("__VIEWSTATEENCRYPTED", "");
                 payload.Add("__EVENTVALIDATION", eventvalidation);
                 payload.Add("t_AccountID", id);
                 payload.Add("t_Password", pass);
                 payload.Add("btn_login", "登入");
 
-                response = Encoding.UTF8.GetString(this.UploadValues("https://tw.newlogin.beanfun.com/login/id-pass_form.aspx?skey=" + skey, payload));
+                response = Encoding.UTF8.GetString(this.UploadValues($"https://{loginHost}/login/id-pass_form{(radval == "HK" ? "_newBF.aspx?otp1" : ".aspx?skey")}={skey}", payload));
                 SleepRandom();
 
                 regex = new Regex("akey=(.*)");
@@ -219,19 +226,32 @@ namespace BeanfunLogin
 
         public string GetSessionkey()
         {
-            string response = this.DownloadString("https://tw.beanfun.com/beanfun_block/bflogin/default.aspx?service=999999_T0");
-            //this.DownloadString(this.ResponseHeaders["Location"]);
-            //this.DownloadString(this.ResponseHeaders["Location"]);
-            //response = this.ResponseHeaders["Location"];
-            response = this.ResponseUri.ToString();
-            SleepRandom();
+            if (radval == "TW")
+            {
+                string response = this.DownloadString("https://tw.beanfun.com/beanfun_block/bflogin/default.aspx?service=999999_T0");
+                //this.DownloadString(this.ResponseHeaders["Location"]);
+                //this.DownloadString(this.ResponseHeaders["Location"]);
+                //response = this.ResponseHeaders["Location"];
+                response = this.ResponseUri.ToString();
+                SleepRandom();
 
-            if (response == null)
-            { this.errmsg = "LoginNoResponse"; return null; }
-            Regex regex = new Regex("skey=(.*)&display");
-            if (!regex.IsMatch(response))
-            { this.errmsg = "LoginNoSkey"; return null; }
-            return regex.Match(response).Groups[1].Value;
+                if (response == null)
+                { this.errmsg = "LoginNoResponse"; return null; }
+                Regex regex = new Regex("skey=(.*)&display");
+                if (!regex.IsMatch(response))
+                { this.errmsg = "LoginNoSkey"; return null; }
+                return regex.Match(response).Groups[1].Value;
+            }
+            else
+            {
+                string response = this.DownloadString("https://bfweb.hk.beanfun.com/beanfun_block/bflogin/default.aspx?service=999999_T0");
+                if (response == null)
+                { this.errmsg = "LoginNoResponse"; return null; }
+                Regex regex = new Regex("<span id=\"ctl00_ContentPlaceHolder1_lblOtp1\">(.*)</span>");
+                if (!regex.IsMatch(response))
+                { this.errmsg = "LoginNoOTP1"; return null; }
+                return regex.Match(response).Groups[1].Value;
+            }
         }
 
         public void Login(string id, string pass, QRCodeClass qrcodeClass = null, string service_code = "610074", string service_region = "T9")
@@ -270,16 +290,22 @@ namespace BeanfunLogin
                 if (akey == null)
                     return;
 
+                string host;
+                if (radval == "TW")
+                    host = "tw.beanfun.com";
+                else
+                    host = "bfweb.hk.beanfun.com";
+
                 NameValueCollection payload = new NameValueCollection();
                 payload.Add("SessionKey", skey);
                 payload.Add("AuthKey", akey);
                 Debug.WriteLine("skey : " + skey);
                 Debug.WriteLine("akey : " + akey);
-                response = Encoding.UTF8.GetString(this.UploadValues("https://tw.beanfun.com/beanfun_block/bflogin/return.aspx", payload));
+                response = Encoding.UTF8.GetString(this.UploadValues($"https://{host}/beanfun_block/bflogin/return.aspx", payload));
                 SleepRandom();
 
                 Debug.WriteLine(response);
-                response = this.DownloadString("https://tw.beanfun.com/" + this.ResponseHeaders["Location"]);
+                response = this.DownloadString($"https://{host}/" + this.ResponseHeaders["Location"]);
                 SleepRandom();
 
                 Debug.WriteLine(response);

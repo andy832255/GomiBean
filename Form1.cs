@@ -38,12 +38,15 @@ namespace GomiBean
         private GamePathDB gamePaths = new GamePathDB();
         private string otp;
 
+
+
         public Form1()
         {
             InitializeComponent();
             Debug.WriteLine("init start");
             init();
             Debug.WriteLine("init end");
+            Debug.WriteLine(BeanfunClient.radval);
         }
 
         private void loginButton_Click(object sender, EventArgs e)
@@ -331,6 +334,17 @@ namespace GomiBean
             }
         }
 
+        private void radHK_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radHK.Checked) { BeanfunClient.radval = "HK"; }
+            Debug.WriteLine(BeanfunClient.radval);
+        }
+
+        private void radTW_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radTW.Checked) { BeanfunClient.radval = "TW"; }
+            Debug.WriteLine(BeanfunClient.radval);
+        }
 
         private void processStart(string prog, string arg)
         {

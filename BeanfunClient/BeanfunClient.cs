@@ -78,14 +78,14 @@ namespace BeanfunLogin
 
         protected override WebResponse GetWebResponse(WebRequest request)
         {
-          WebResponse webResponse = base.GetWebResponse(request);
+            WebResponse webResponse = base.GetWebResponse(request);
             this.ResponseUri = webResponse.ResponseUri;
             return webResponse;
         }
 
         private string GetCookie(string cookieName)
         {
-            foreach (Cookie cookie in this.CookieContainer.GetCookies(new Uri("https://tw.beanfun.com/")))
+            foreach (Cookie cookie in this.CookieContainer.GetCookies(new Uri("https://" + (radval == "TW" ? "tw" : "bfweb.hk") + ".beanfun.com/")))
             {
                 if (cookie.Name == cookieName)
                 {
@@ -115,7 +115,7 @@ namespace BeanfunLogin
 
             raw = this.DownloadData("https://tw.beanfun.com/beanfun_block/generic_handlers/echo_token.ashx?webtoken=1");
             string ret = Encoding.GetString(raw);
-            Debug.WriteLine(GetCurrentTime() + " @ " +ret);
+            Debug.WriteLine(GetCurrentTime() + " @ " + ret);
         }
 
     }

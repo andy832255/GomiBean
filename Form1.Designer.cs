@@ -45,11 +45,15 @@ namespace GomiBean
             this.lblTimeTitle = new System.Windows.Forms.Label();
             this.lblTime = new System.Windows.Forms.Label();
             this.gamaotp_challenge_code_output = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.radTW = new System.Windows.Forms.RadioButton();
+            this.radHK = new System.Windows.Forms.RadioButton();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // export
             // 
-            this.export.Location = new System.Drawing.Point(270, 250);
+            this.export.Location = new System.Drawing.Point(273, 277);
             this.export.Name = "export";
             this.export.Size = new System.Drawing.Size(50, 30);
             this.export.TabIndex = 59;
@@ -59,7 +63,7 @@ namespace GomiBean
             // 
             // import
             // 
-            this.import.Location = new System.Drawing.Point(325, 249);
+            this.import.Location = new System.Drawing.Point(328, 276);
             this.import.Name = "import";
             this.import.Size = new System.Drawing.Size(50, 30);
             this.import.TabIndex = 58;
@@ -69,7 +73,7 @@ namespace GomiBean
             // 
             // delete
             // 
-            this.delete.Location = new System.Drawing.Point(381, 249);
+            this.delete.Location = new System.Drawing.Point(384, 276);
             this.delete.Name = "delete";
             this.delete.Size = new System.Drawing.Size(50, 30);
             this.delete.TabIndex = 57;
@@ -81,7 +85,7 @@ namespace GomiBean
             // 
             this.accounts.FormattingEnabled = true;
             this.accounts.ItemHeight = 12;
-            this.accounts.Location = new System.Drawing.Point(270, 25);
+            this.accounts.Location = new System.Drawing.Point(273, 52);
             this.accounts.Name = "accounts";
             this.accounts.Size = new System.Drawing.Size(160, 208);
             this.accounts.TabIndex = 56;
@@ -89,7 +93,7 @@ namespace GomiBean
             // passwdInput
             // 
             this.passwdInput.ImeMode = System.Windows.Forms.ImeMode.Disable;
-            this.passwdInput.Location = new System.Drawing.Point(86, 126);
+            this.passwdInput.Location = new System.Drawing.Point(89, 153);
             this.passwdInput.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.passwdInput.Name = "passwdInput";
             this.passwdInput.PasswordChar = '*';
@@ -99,7 +103,7 @@ namespace GomiBean
             // passLabel
             // 
             this.passLabel.Font = new System.Drawing.Font("微軟正黑體", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.passLabel.Location = new System.Drawing.Point(12, 126);
+            this.passLabel.Location = new System.Drawing.Point(15, 153);
             this.passLabel.Name = "passLabel";
             this.passLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.passLabel.Size = new System.Drawing.Size(69, 19);
@@ -110,7 +114,7 @@ namespace GomiBean
             // accountLabel
             // 
             this.accountLabel.Font = new System.Drawing.Font("微軟正黑體", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.accountLabel.Location = new System.Drawing.Point(12, 85);
+            this.accountLabel.Location = new System.Drawing.Point(15, 112);
             this.accountLabel.Name = "accountLabel";
             this.accountLabel.Size = new System.Drawing.Size(69, 19);
             this.accountLabel.TabIndex = 48;
@@ -120,7 +124,7 @@ namespace GomiBean
             // accountInput
             // 
             this.accountInput.ImeMode = System.Windows.Forms.ImeMode.Disable;
-            this.accountInput.Location = new System.Drawing.Point(86, 85);
+            this.accountInput.Location = new System.Drawing.Point(89, 112);
             this.accountInput.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.accountInput.Name = "accountInput";
             this.accountInput.Size = new System.Drawing.Size(142, 22);
@@ -131,7 +135,7 @@ namespace GomiBean
             this.loginButton.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.loginButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(120)))), ((int)(((byte)(159)))));
             this.loginButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.loginButton.Location = new System.Drawing.Point(32, 178);
+            this.loginButton.Location = new System.Drawing.Point(35, 205);
             this.loginButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.loginButton.Name = "loginButton";
             this.loginButton.Size = new System.Drawing.Size(87, 29);
@@ -144,7 +148,7 @@ namespace GomiBean
             // 
             this.button2.Font = new System.Drawing.Font("微軟正黑體", 8.8F);
             this.button2.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.button2.Location = new System.Drawing.Point(32, 25);
+            this.button2.Location = new System.Drawing.Point(35, 52);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(196, 40);
             this.button2.TabIndex = 64;
@@ -157,7 +161,7 @@ namespace GomiBean
             this.btnGamestart.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.btnGamestart.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(120)))), ((int)(((byte)(159)))));
             this.btnGamestart.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnGamestart.Location = new System.Drawing.Point(133, 178);
+            this.btnGamestart.Location = new System.Drawing.Point(136, 205);
             this.btnGamestart.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnGamestart.Name = "btnGamestart";
             this.btnGamestart.Size = new System.Drawing.Size(95, 29);
@@ -171,7 +175,7 @@ namespace GomiBean
             this.lblMessage.AutoSize = true;
             this.lblMessage.Font = new System.Drawing.Font("微軟正黑體", 19.25F);
             this.lblMessage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(212)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblMessage.Location = new System.Drawing.Point(26, 262);
+            this.lblMessage.Location = new System.Drawing.Point(29, 289);
             this.lblMessage.Name = "lblMessage";
             this.lblMessage.Size = new System.Drawing.Size(0, 33);
             this.lblMessage.TabIndex = 66;
@@ -181,7 +185,7 @@ namespace GomiBean
             this.btnOneClick.Font = new System.Drawing.Font("微軟正黑體", 15.75F);
             this.btnOneClick.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(157)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnOneClick.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnOneClick.Location = new System.Drawing.Point(107, 215);
+            this.btnOneClick.Location = new System.Drawing.Point(110, 242);
             this.btnOneClick.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnOneClick.Name = "btnOneClick";
             this.btnOneClick.Size = new System.Drawing.Size(121, 34);
@@ -195,7 +199,7 @@ namespace GomiBean
             this.lblTimeTitle.AutoSize = true;
             this.lblTimeTitle.Font = new System.Drawing.Font("微軟正黑體", 14.25F);
             this.lblTimeTitle.ForeColor = System.Drawing.Color.Crimson;
-            this.lblTimeTitle.Location = new System.Drawing.Point(266, 301);
+            this.lblTimeTitle.Location = new System.Drawing.Point(269, 328);
             this.lblTimeTitle.Name = "lblTimeTitle";
             this.lblTimeTitle.Size = new System.Drawing.Size(87, 24);
             this.lblTimeTitle.TabIndex = 68;
@@ -206,7 +210,7 @@ namespace GomiBean
             this.lblTime.AutoSize = true;
             this.lblTime.Font = new System.Drawing.Font("微軟正黑體", 14.25F);
             this.lblTime.ForeColor = System.Drawing.Color.Crimson;
-            this.lblTime.Location = new System.Drawing.Point(359, 301);
+            this.lblTime.Location = new System.Drawing.Point(362, 328);
             this.lblTime.Name = "lblTime";
             this.lblTime.Size = new System.Drawing.Size(0, 24);
             this.lblTime.TabIndex = 69;
@@ -216,16 +220,51 @@ namespace GomiBean
             this.gamaotp_challenge_code_output.AutoSize = true;
             this.gamaotp_challenge_code_output.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.gamaotp_challenge_code_output.ForeColor = System.Drawing.Color.Red;
-            this.gamaotp_challenge_code_output.Location = new System.Drawing.Point(103, 169);
+            this.gamaotp_challenge_code_output.Location = new System.Drawing.Point(106, 196);
             this.gamaotp_challenge_code_output.Name = "gamaotp_challenge_code_output";
             this.gamaotp_challenge_code_output.Size = new System.Drawing.Size(0, 21);
             this.gamaotp_challenge_code_output.TabIndex = 60;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.radHK);
+            this.groupBox1.Controls.Add(this.radTW);
+            this.groupBox1.Location = new System.Drawing.Point(35, 12);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(103, 34);
+            this.groupBox1.TabIndex = 70;
+            this.groupBox1.TabStop = false;
+            // 
+            // radTW
+            // 
+            this.radTW.AutoSize = true;
+            this.radTW.Checked = true;
+            this.radTW.Location = new System.Drawing.Point(6, 12);
+            this.radTW.Name = "radTW";
+            this.radTW.Size = new System.Drawing.Size(41, 16);
+            this.radTW.TabIndex = 0;
+            this.radTW.TabStop = true;
+            this.radTW.Text = "TW";
+            this.radTW.UseVisualStyleBackColor = true;
+            this.radTW.CheckedChanged += new System.EventHandler(this.radTW_CheckedChanged);
+            // 
+            // radHK
+            // 
+            this.radHK.AutoSize = true;
+            this.radHK.Location = new System.Drawing.Point(54, 12);
+            this.radHK.Name = "radHK";
+            this.radHK.Size = new System.Drawing.Size(39, 16);
+            this.radHK.TabIndex = 1;
+            this.radHK.Text = "HK";
+            this.radHK.UseVisualStyleBackColor = true;
+            this.radHK.CheckedChanged += new System.EventHandler(this.radHK_CheckedChanged);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(484, 366);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.lblTime);
             this.Controls.Add(this.lblTimeTitle);
             this.Controls.Add(this.btnOneClick);
@@ -244,6 +283,8 @@ namespace GomiBean
             this.Controls.Add(this.loginButton);
             this.Name = "Form1";
             this.Text = "GomiBean";
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -266,6 +307,9 @@ namespace GomiBean
         private System.Windows.Forms.Label lblTimeTitle;
         private System.Windows.Forms.Label lblTime;
         private System.Windows.Forms.Label gamaotp_challenge_code_output;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.RadioButton radHK;
+        private System.Windows.Forms.RadioButton radTW;
     }
 }
 

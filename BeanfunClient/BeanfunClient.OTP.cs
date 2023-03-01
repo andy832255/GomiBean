@@ -40,11 +40,23 @@ namespace BeanfunLogin
             }
         }
 
-        public string GetOTP(AccountList acc, string service_code="610074", string service_region="T9")
+        public string GetOTP(AccountList acc, string service_code = "610074", string service_region = "T9")
         {
+            string host;
+            string loginHost;
+            if (radval == "TW")
+            {
+                host = "tw.beanfun.com";
+                loginHost = "tw.newlogin.beanfun.com";
+            }
+            else
+            {
+                host = "bfweb.hk.beanfun.com";
+                loginHost = "login.hk.beanfun.com";
+            }
             try
             {
-                string response = this.DownloadString("https://tw.beanfun.com/beanfun_block/game_zone/game_start_step2.aspx?service_code="+service_code+"&service_region="+service_region+"&sotp=" + acc.sotp + "&dt=" + GetCurrentTime(2), Encoding.UTF8);
+                string response = this.DownloadString($"https://{host}/beanfun_block/game_zone/game_start_step2.aspx?service_code=" + service_code + "&service_region=" + service_region + "&sotp=" + acc.sotp + "&dt=" + GetCurrentTime(2), Encoding.UTF8);
                 SleepRandom();
 
                 if (response == "")
@@ -61,14 +73,14 @@ namespace BeanfunLogin
                     { this.errmsg = "OTPNoCreateTime"; return null; }
                     acc.screatetime = regex.Match(response).Groups[1].Value;
                 }
-                response = this.DownloadString("https://tw.newlogin.beanfun.com/generic_handlers/get_cookies.ashx", Encoding.UTF8);
+                response = this.DownloadString($"https://{loginHost}/generic_handlers/get_cookies.ashx", Encoding.UTF8);
                 SleepRandom();
 
                 regex = new Regex("var m_strSecretCode = '(.*)';");
                 if (!regex.IsMatch(response))
                 { this.errmsg = "OTPNoSecretCode"; return null; }
                 string secretCode = regex.Match(response).Groups[1].Value;
-                
+
                 NameValueCollection payload = new NameValueCollection();
                 payload.Add("service_code", service_code);
                 payload.Add("service_region", service_region);
@@ -78,12 +90,12 @@ namespace BeanfunLogin
                 payload.Add("service_create_time", acc.screatetime);
                 // testing...
                 System.Net.ServicePointManager.Expect100Continue = false;
-                this.UploadValues("https://tw.beanfun.com/beanfun_block/generic_handlers/record_service_start.ashx", payload);
-                response = this.DownloadString("https://tw.beanfun.com/generic_handlers/get_result.ashx?meth=GetResultByLongPolling&key=" + longPollingKey + "&_=" + GetCurrentTime());
+                this.UploadValues($"https://{host}/beanfun_block/generic_handlers/record_service_start.ashx", payload);
+                response = this.DownloadString($"https://{host}/generic_handlers/get_result.ashx?meth=GetResultByLongPolling&key=" + longPollingKey + "&_=" + GetCurrentTime());
                 SleepRandom();
                 //Thread.Sleep(5000);
                 //Debug.WriteLine(Environment.TickCount);
-                response = this.DownloadString("http://tw.beanfun.com/beanfun_block/generic_handlers/get_webstart_otp.ashx?SN=" + longPollingKey + "&WebToken=" + this.webtoken + "&SecretCode=" + secretCode + "&ppppp=1F552AEAFF976018F942B13690C990F60ED01510DDF89165F1658CCE7BC21DBA&ServiceCode=" + service_code+"&ServiceRegion="+service_region+"&ServiceAccount=" + acc.sacc + "&CreateTime=" + acc.screatetime.Replace(" ", "%20") + "&d=" + Environment.TickCount);
+                response = this.DownloadString($"http://{host}/beanfun_block/generic_handlers/get_webstart_otp.ashx?SN=" + longPollingKey + "&WebToken=" + this.webtoken + "&SecretCode=" + secretCode + "&ppppp=1F552AEAFF976018F942B13690C990F60ED01510DDF89165F1658CCE7BC21DBA&ServiceCode=" + service_code + "&ServiceRegion=" + service_region + "&ServiceAccount=" + acc.sacc + "&CreateTime=" + acc.screatetime.Replace(" ", "%20") + "&d=" + Environment.TickCount);
                 SleepRandom();
 
                 response = response.Substring(2);
@@ -91,8 +103,8 @@ namespace BeanfunLogin
                 string plain = response.Substring(8);
                 string otp = DecryptDES(plain, key);
                 if (otp != null)
-                    this.errmsg = null;       
-           
+                    this.errmsg = null;
+
                 return otp;
             }
             catch (Exception e)

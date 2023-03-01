@@ -15,13 +15,19 @@ namespace BeanfunLogin
             if (this.webtoken == null)
             { return; }
 
+            string host;
+            if (radval == "TW")
+                host = "tw.beanfun.com";
+            else
+                host = "bfweb.hk.beanfun.com";
+
             Regex regex;
 
             // Do auth.
-            string response = this.DownloadString("https://tw.beanfun.com/beanfun_block/auth.aspx?channel=game_zone&page_and_query=game_start.aspx%3Fservice_code_and_region%3D" + service_code + "_" + service_region + "&web_token=" + webtoken, Encoding.UTF8);
+            string response = this.DownloadString($"https://{host}/beanfun_block/auth.aspx?channel=game_zone&page_and_query=game_start.aspx%3Fservice_code_and_region%3D{service_code}_{service_region}&web_token={webtoken}", Encoding.UTF8);
 
             // Fetch accounts.
-            string url = "https://tw.beanfun.com/beanfun_block/game_zone/game_server_account_list.aspx?sc=" + service_code + "&sr=" + service_region + "&dt=" + GetCurrentTime(2);
+            string url = $"https://{host}/beanfun_block/game_zone/game_server_account_list.aspx?sc={service_code}&sr={service_region}&dt={GetCurrentTime(2)}";
             response = this.DownloadString(url, Encoding.UTF8);
             SleepRandom();
 
