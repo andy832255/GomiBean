@@ -46,14 +46,14 @@ namespace GomiBean
             this.lblTime = new System.Windows.Forms.Label();
             this.gamaotp_challenge_code_output = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.radTW = new System.Windows.Forms.RadioButton();
             this.radHK = new System.Windows.Forms.RadioButton();
+            this.radTW = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // export
             // 
-            this.export.Location = new System.Drawing.Point(273, 277);
+            this.export.Location = new System.Drawing.Point(273, 249);
             this.export.Name = "export";
             this.export.Size = new System.Drawing.Size(50, 30);
             this.export.TabIndex = 59;
@@ -63,7 +63,7 @@ namespace GomiBean
             // 
             // import
             // 
-            this.import.Location = new System.Drawing.Point(328, 276);
+            this.import.Location = new System.Drawing.Point(328, 248);
             this.import.Name = "import";
             this.import.Size = new System.Drawing.Size(50, 30);
             this.import.TabIndex = 58;
@@ -73,7 +73,7 @@ namespace GomiBean
             // 
             // delete
             // 
-            this.delete.Location = new System.Drawing.Point(384, 276);
+            this.delete.Location = new System.Drawing.Point(384, 248);
             this.delete.Name = "delete";
             this.delete.Size = new System.Drawing.Size(50, 30);
             this.delete.TabIndex = 57;
@@ -85,7 +85,7 @@ namespace GomiBean
             // 
             this.accounts.FormattingEnabled = true;
             this.accounts.ItemHeight = 12;
-            this.accounts.Location = new System.Drawing.Point(273, 52);
+            this.accounts.Location = new System.Drawing.Point(273, 24);
             this.accounts.Name = "accounts";
             this.accounts.Size = new System.Drawing.Size(160, 208);
             this.accounts.TabIndex = 56;
@@ -235,6 +235,17 @@ namespace GomiBean
             this.groupBox1.TabIndex = 70;
             this.groupBox1.TabStop = false;
             // 
+            // radHK
+            // 
+            this.radHK.AutoSize = true;
+            this.radHK.Location = new System.Drawing.Point(54, 12);
+            this.radHK.Name = "radHK";
+            this.radHK.Size = new System.Drawing.Size(39, 16);
+            this.radHK.TabIndex = 1;
+            this.radHK.Text = "HK";
+            this.radHK.UseVisualStyleBackColor = true;
+            this.radHK.CheckedChanged += new System.EventHandler(this.radHK_CheckedChanged);
+            // 
             // radTW
             // 
             this.radTW.AutoSize = true;
@@ -247,17 +258,6 @@ namespace GomiBean
             this.radTW.Text = "TW";
             this.radTW.UseVisualStyleBackColor = true;
             this.radTW.CheckedChanged += new System.EventHandler(this.radTW_CheckedChanged);
-            // 
-            // radHK
-            // 
-            this.radHK.AutoSize = true;
-            this.radHK.Location = new System.Drawing.Point(54, 12);
-            this.radHK.Name = "radHK";
-            this.radHK.Size = new System.Drawing.Size(39, 16);
-            this.radHK.TabIndex = 1;
-            this.radHK.Text = "HK";
-            this.radHK.UseVisualStyleBackColor = true;
-            this.radHK.CheckedChanged += new System.EventHandler(this.radHK_CheckedChanged);
             // 
             // Form1
             // 
