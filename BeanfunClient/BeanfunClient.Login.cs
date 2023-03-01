@@ -28,9 +28,24 @@ namespace BeanfunLogin
                 loginHost = "login.hk.beanfun.com";
             try
             {
-                string response = this.DownloadString($"https://{loginHost}/login/id-pass_form{(radval == "HK" ? "_newBF.aspx?otp1" : ".aspx?skey")}={skey}");
-                SleepRandom();
+                //string response = this.DownloadString($"https://{loginHost}/login/id-pass_form{(radval == "HK" ? "_newBF.aspx?otp1" : ".aspx?skey")}={skey}");
+                //SleepRandom();
 
+                //Regex regex = new Regex("id=\"__VIEWSTATE\" value=\"(.*)\" />");
+                //if (!regex.IsMatch(response))
+                //{ this.errmsg = "LoginNoViewstate"; return null; }
+                //string viewstate = regex.Match(response).Groups[1].Value;
+
+                //regex = new Regex("id=\"__EVENTVALIDATION\" value=\"(.*)\" />");
+                //if (!regex.IsMatch(response))
+                //{ this.errmsg = "LoginNoEventvalidation"; return null; }
+                //string eventvalidation = regex.Match(response).Groups[1].Value;
+                //regex = new Regex("id=\"__VIEWSTATEGENERATOR\" value=\"(.*)\" />");
+                //if (!regex.IsMatch(response))
+                //{ this.errmsg = "LoginNoViewstateGenerator"; return null; }
+                //string viewstateGenerator = regex.Match(response).Groups[1].Value;
+
+                string response = this.DownloadString($"https://{loginHost}/login/id-pass_form{(radval == "HK" ? "_newBF.aspx?otp1" : ".aspx?skey")}={skey}");
                 Regex regex = new Regex("id=\"__VIEWSTATE\" value=\"(.*)\" />");
                 if (!regex.IsMatch(response))
                 { this.errmsg = "LoginNoViewstate"; return null; }
@@ -46,6 +61,15 @@ namespace BeanfunLogin
                 string viewstateGenerator = regex.Match(response).Groups[1].Value;
 
                 NameValueCollection payload = new NameValueCollection();
+                //payload.Add("__EVENTTARGET", "");
+                //payload.Add("__EVENTARGUMENT", "");
+                //payload.Add("__VIEWSTATE", viewstate);
+                //payload.Add("__VIEWSTATEGENERATOR", viewstateGenerator);
+                //if (radval == "HK") payload.Add("__VIEWSTATEENCRYPTED", "");
+                //payload.Add("__EVENTVALIDATION", eventvalidation);
+                //payload.Add("t_AccountID", id);
+                //payload.Add("t_Password", pass);
+
                 payload.Add("__EVENTTARGET", "");
                 payload.Add("__EVENTARGUMENT", "");
                 payload.Add("__VIEWSTATE", viewstate);
@@ -56,12 +80,31 @@ namespace BeanfunLogin
                 payload.Add("t_Password", pass);
                 payload.Add("btn_login", "登入");
 
-                response = Encoding.UTF8.GetString(this.UploadValues($"https://{loginHost}/login/id-pass_form{(radval == "HK" ? "_newBF.aspx?otp1" : ".aspx?skey")}={skey}", payload));
+                //response = Encoding.UTF8.GetString(this.UploadValues($"https://{loginHost}/login/id-pass_form{(radval == "HK" ? "_newBF.aspx?otp1" : ".aspx?skey")}={skey}", payload));
+                response = this.UploadString($"https://{loginHost}/login/id-pass_form{(radval == "HK" ? "_newBF.aspx?otp1" : ".aspx?skey")}={skey}", payload);
                 SleepRandom();
 
+                if (response.Contains("RELOAD_CAPTCHA_CODE") && response.Contains("alert"))
+                { this.errmsg = "LoginAdvanceCheck"; return null; }
+
                 regex = new Regex("akey=(.*)");
+                //if (!regex.IsMatch(this.ResponseUri.ToString()))
+                //{ this.errmsg = "LoginNoAkey"; return null; }
+                //string akey = regex.Match(this.ResponseUri.ToString()).Groups[1].Value;
                 if (!regex.IsMatch(this.ResponseUri.ToString()))
-                { this.errmsg = "LoginNoAkey"; return null; }
+                {
+                    this.errmsg = "LoginNoAkey";
+                    regex = new Regex("<script type=\"text/javascript\">\\$\\(function\\(\\){MsgBox.Show\\('(.*)'\\);}\\);</script>");
+                    if (regex.IsMatch(response))
+                    { this.errmsg = regex.Match(response).Groups[1].Value; }
+                    else
+                    {
+                        regex = new Regex("pollRequest\\(\"([^\"]*)\",\"(\\w+)\",\"([^\"]+)\"\\);");
+                        if (regex.IsMatch(response))
+                        { this.errmsg = regex.Match(response).Groups[1].Value + "\",\"" + regex.Match(response).Groups[3].Value; string LoginToken = regex.Match(response).Groups[2].Value; }
+                    }
+                    return null;
+                }
                 string akey = regex.Match(this.ResponseUri.ToString()).Groups[1].Value;
 
                 return akey;
@@ -299,13 +342,18 @@ namespace BeanfunLogin
                 NameValueCollection payload = new NameValueCollection();
                 payload.Add("SessionKey", skey);
                 payload.Add("AuthKey", akey);
+                payload.Add("ServiceCode", "");
+                payload.Add("ServiceRegion", "");
+                payload.Add("ServiceAccountSN", "0");
                 Debug.WriteLine("skey : " + skey);
                 Debug.WriteLine("akey : " + akey);
-                response = Encoding.UTF8.GetString(this.UploadValues($"https://{host}/beanfun_block/bflogin/return.aspx", payload));
+                //response = Encoding.UTF8.GetString(this.UploadValues($"https://{host}/beanfun_block/bflogin/return.aspx", payload));
+                response = this.UploadString($"https://{host}/beanfun_block/bflogin/return.aspx", payload);
                 SleepRandom();
 
                 Debug.WriteLine(response);
-                response = this.DownloadString($"https://{host}/" + this.ResponseHeaders["Location"]);
+                //response = this.DownloadString($"https://{host}/" + this.ResponseHeaders["Location"]);
+                response = this.DownloadString($"https://{host}/{this.ResponseHeaders["Location"]}");
                 SleepRandom();
 
                 Debug.WriteLine(response);

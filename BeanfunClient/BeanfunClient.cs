@@ -38,6 +38,8 @@ namespace BeanfunLogin
             this.redirect = true;
             this.CookieContainer = new System.Net.CookieContainer();
             this.Headers.Set("User-Agent", userAgent);
+            this.Headers.Set("Accept-Encoding", "identity");
+            this.Encoding = Encoding.UTF8;
             this.ResponseUri = null;
             this.errmsg = null;
             this.webtoken = null;
@@ -47,12 +49,14 @@ namespace BeanfunLogin
         public string DownloadString(string Uri, Encoding Encoding)
         {
             var ret = (Encoding.GetString(base.DownloadData(Uri)));
+            this.Headers.Set("Accept-Encoding", "identity");
             return ret;
         }
 
         public string DownloadString(string Uri)
         {
             this.Headers.Set("User-Agent", userAgent);
+            this.Headers.Set("Accept-Encoding", "identity");
             var ret = base.DownloadString(Uri);
             return ret;
         }
@@ -60,7 +64,15 @@ namespace BeanfunLogin
         public byte[] UploadValues(string skey, NameValueCollection payload)
         {
             this.Headers.Set("User-Agent", userAgent);
+            this.Headers.Set("Accept-Encoding", "identity");
             return base.UploadValues(skey, payload);
+        }
+
+        public string UploadString(string skey, NameValueCollection payload)
+        {
+            this.Headers.Set("User-Agent", userAgent);
+            this.Headers.Set("Accept-Encoding", "identity");
+            return Encoding.UTF8.GetString(base.UploadValues(skey, payload));
         }
 
         protected override WebRequest GetWebRequest(Uri address)

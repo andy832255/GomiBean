@@ -82,12 +82,20 @@ namespace BeanfunLogin
                 string secretCode = regex.Match(response).Groups[1].Value;
 
                 NameValueCollection payload = new NameValueCollection();
+                //payload.Add("service_code", service_code);
+                //payload.Add("service_region", service_region);
+                //payload.Add("service_account_id", acc.sacc);
+                //payload.Add("service_sotp", acc.sotp);
+                //payload.Add("service_display_name", acc.sname);
+                //payload.Add("service_create_time", acc.screatetime);
+
                 payload.Add("service_code", service_code);
                 payload.Add("service_region", service_region);
                 payload.Add("service_account_id", acc.sacc);
-                payload.Add("service_sotp", acc.sotp);
-                payload.Add("service_display_name", acc.sname);
-                payload.Add("service_create_time", acc.screatetime);
+                payload.Add("sotp", acc.sotp);
+                payload.Add("service_account_display_name", acc.sname);
+                payload.Add("service_account_create_time", acc.screatetime);
+
                 // testing...
                 System.Net.ServicePointManager.Expect100Continue = false;
                 this.UploadValues($"https://{host}/beanfun_block/generic_handlers/record_service_start.ashx", payload);
@@ -95,7 +103,9 @@ namespace BeanfunLogin
                 SleepRandom();
                 //Thread.Sleep(5000);
                 //Debug.WriteLine(Environment.TickCount);
-                response = this.DownloadString($"http://{host}/beanfun_block/generic_handlers/get_webstart_otp.ashx?SN=" + longPollingKey + "&WebToken=" + this.webtoken + "&SecretCode=" + secretCode + "&ppppp=1F552AEAFF976018F942B13690C990F60ED01510DDF89165F1658CCE7BC21DBA&ServiceCode=" + service_code + "&ServiceRegion=" + service_region + "&ServiceAccount=" + acc.sacc + "&CreateTime=" + acc.screatetime.Replace(" ", "%20") + "&d=" + Environment.TickCount);
+                //response = this.DownloadString($"http://{host}/beanfun_block/generic_handlers/get_webstart_otp.ashx?SN=" + longPollingKey + "&WebToken=" + this.webtoken + "&SecretCode=" + secretCode + "&ppppp=1F552AEAFF976018F942B13690C990F60ED01510DDF89165F1658CCE7BC21DBA&ServiceCode=" + service_code + "&ServiceRegion=" + service_region + "&ServiceAccount=" + acc.sacc + "&CreateTime=" + acc.screatetime.Replace(" ", "%20") + "&d=" + Environment.TickCount);
+
+                response = this.DownloadString($"https://{host}/beanfun_block/generic_handlers/get_webstart_otp.ashx?SN={longPollingKey}&WebToken={this.webtoken}&SecretCode={secretCode}&ppppp=1F552AEAFF976018F942B13690C990F60ED01510DDF89165F1658CCE7BC21DBA&ServiceCode={service_code}&ServiceRegion={service_region}&ServiceAccount={acc.sacc}&CreateTime={acc.screatetime.Replace(" ", "%20")}&d={Environment.TickCount}");
                 SleepRandom();
 
                 response = response.Substring(2);
