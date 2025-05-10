@@ -23,4 +23,3 @@
 
 🔶儲存帳密會將帳號密碼加密後儲存在與程式相同資料夾下的UserList.dat檔案![image](https://github.com/andy832255/GomiBean/assets/60883641/3cc382b5-390e-4640-a444-a46a4293f01b)
 
-![image](https://github.com/andy832255/GomiBean/assets/60883641/4eb274c0-5a98-4738-b8b1-ee4cb41b3cac)
